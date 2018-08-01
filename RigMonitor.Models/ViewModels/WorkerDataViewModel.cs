@@ -1,5 +1,6 @@
 ﻿using System;
 using RigMonitor.Models.DataModels;
+using RigMonitor.Models.DataModels.Miner;
 
 namespace RigMonitor.Models.ViewModels
 {
@@ -39,7 +40,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h1 = Convert.ToDouble(workerData.Avg_h1.Replace('.', ','));
+                Avg_h1 = Convert.ToDouble(workerData.H1.Replace('.', ','));
             }
             catch (FormatException)
             {
@@ -48,7 +49,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h3 = Convert.ToDouble(workerData.Avg_h3.Replace('.', ','));
+                Avg_h3 = Convert.ToDouble(workerData.H3.Replace('.', ','));
             }
             catch (FormatException)
             {
@@ -57,7 +58,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h6 = Convert.ToDouble(workerData.Avg_h6.Replace('.', ','));
+                Avg_h6 = Convert.ToDouble(workerData.H6.Replace('.', ','));
             }
             catch (FormatException)
             {
@@ -66,7 +67,7 @@ namespace RigMonitor.Models.ViewModels
             
             try
             {
-                Avg_h12 = Convert.ToDouble(workerData.Avg_h12.Replace('.', ','));
+                Avg_h12 = Convert.ToDouble(workerData.H12.Replace('.', ','));
             }
             catch (FormatException)
             {
@@ -75,7 +76,7 @@ namespace RigMonitor.Models.ViewModels
             
             try
             {
-                Avg_h24 = Convert.ToDouble(workerData.Avg_h24.Replace('.', ','));
+                Avg_h24 = Convert.ToDouble(workerData.H24.Replace('.', ','));
             }
             catch (FormatException)
             {

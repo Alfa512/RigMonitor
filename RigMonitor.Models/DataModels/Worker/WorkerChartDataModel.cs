@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RigMonitor.Models.DataModels.Miner;
 
 namespace RigMonitor.Models.DataModels.Worker
 {

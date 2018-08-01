@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RigMonitor.Models.DataModels
+namespace RigMonitor.Models.DataModels.Miner
 {
     public class HashrateHistoryModel : NanopoolEth
     {
