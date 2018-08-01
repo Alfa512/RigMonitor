@@ -93,5 +93,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RigMonitor.Api.Nanopool\RigMonitor.Api.Nanopool.csproj">
+      <Project>{D7F2C244-C399-4AAF-B833-F2DDCAB21C6A}</Project>
+      <Name>RigMonitor.Api.Nanopool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RigMonitor.Models\RigMonitor.Models.csproj">
+      <Project>{EEC86678-5E50-4E14-A84D-41F6C8E73651}</Project>
+      <Name>RigMonitor.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

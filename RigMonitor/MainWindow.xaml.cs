@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using RigMonitor.Api.Nanopool.ETH;
 
 namespace RigMonitor
 {
@@ -20,9 +11,24 @@ namespace RigMonitor
     /// </summary>
     public partial class MainWindow : Window
     {
+        public EthController EthController;
         public MainWindow()
         {
+            EthController = new EthController();
             InitializeComponent();
+        }
+
+        private void StartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var info = EthController.GetGeneralInfo();
+            CurrentCalculatedHashrateTextBox.Text = Convert.ToString(info.Data.Hashrate, CultureInfo.InvariantCulture);
+            BalanceTextBox.Text = info.Data.Balance;
+            AverageHashrate6HoursTextBox.Text = info.Data.Avghashrate.H6;
+
+            var workersData = EthController.GetAllWorkersData();
+            WorkersTable.ItemsSource = workersData;
+            var lastReportedHashrate = workersData.Sum(r => r.ReportedHashrate);
+            LastReportedHashrateTextBox.Text = lastReportedHashrate.ToString("N2");
         }
     }
 }

@@ -64,10 +64,10 @@
     <Compile Include="DataModels\Worker\WorkerCurrentHashrateModel.cs" />
     <Compile Include="DataModels\Worker\WorkerLastReportedHashrateForWorkerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\WorkerDataViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModels\Network\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
