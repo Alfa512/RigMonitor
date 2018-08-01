@@ -40,16 +40,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModels\AverageHashrateModel.cs" />
-    <Compile Include="DataModels\AverageHashrateData.cs" />
-    <Compile Include="DataModels\AverageHashrateForHoursModel.cs" />
-    <Compile Include="DataModels\ChartData.cs" />
-    <Compile Include="DataModels\ChartDataModel.cs" />
+    <Compile Include="DataModels\Miner\AverageHashrateModel.cs" />
+    <Compile Include="DataModels\Miner\AverageHashrateData.cs" />
+    <Compile Include="DataModels\Miner\AverageHashrateForHoursModel.cs" />
+    <Compile Include="DataModels\Miner\ChartData.cs" />
+    <Compile Include="DataModels\Miner\ChartDataModel.cs" />
+    <Compile Include="DataModels\Miner\CheckMinerAccountModel.cs" />
+    <Compile Include="DataModels\Miner\CurrentHashrateModel.cs" />
+    <Compile Include="DataModels\Miner\GeneralInfoData.cs" />
+    <Compile Include="DataModels\Miner\GeneralInfoModel.cs" />
+    <Compile Include="DataModels\Miner\HashrateAndBalanceData.cs" />
+    <Compile Include="DataModels\Miner\HashrateAndBalanceModel.cs" />
+    <Compile Include="DataModels\Miner\HashrateHistoryModel.cs" />
+    <Compile Include="DataModels\Miner\LastReportedHashrateForAccountModel.cs" />
+    <Compile Include="DataModels\Miner\ListOfWorkerModel.cs" />
     <Compile Include="DataModels\NanopoolEth.cs" />
-    <Compile Include="DataModels\BalanceModel.cs" />
-    <Compile Include="ViewModels\Class1.cs" />
+    <Compile Include="DataModels\Miner\BalanceModel.cs" />
+    <Compile Include="DataModels\Miner\WorkerData.cs" />
+    <Compile Include="DataModels\Miner\WorkersAverageHashrateData.cs" />
+    <Compile Include="DataModels\Miner\WorkersAverageHashrateModel.cs" />
+    <Compile Include="DataModels\Worker\WorkerAverageHashrateModel.cs" />
+    <Compile Include="DataModels\Worker\WorkerChartDataModel.cs" />
+    <Compile Include="DataModels\Worker\WorkerCurrentHashrateModel.cs" />
+    <Compile Include="DataModels\Worker\WorkerLastReportedHashrateForWorkerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataModels\Network\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

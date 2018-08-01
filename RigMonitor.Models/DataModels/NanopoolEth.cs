@@ -2,8 +2,8 @@
 {
     public class NanopoolEth
     {
-        public bool Status { get; set; }
-        public string Address { get; set; }
-        public string Error { get; set; }
+        public bool Status { get; set; } //Response Status
+        public string Address { get; set; } //Miner account
+        public string Error { get; set; } //Error Description
     }
 }

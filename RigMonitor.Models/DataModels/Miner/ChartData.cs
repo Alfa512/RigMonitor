@@ -4,6 +4,6 @@
     {
         public int Date { get; set; }
         public int Shares { get; set; }
-        public int Hashrate { get; set; }
+        public int Hashrate { get; set; } //Miner Reported Hashrate [Mh/s]
     }
 }
