@@ -20,7 +20,7 @@ namespace RigMonitor.Services
         {
             var workersData = EthController.GetAllWorkersData();
             var worker = workersData.FirstOrDefault(r => r.Id.ToLower().Equals(workerId.ToLower()));
-
+            
         }
     }
 }

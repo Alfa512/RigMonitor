@@ -1,5 +1,4 @@
 ﻿using System;
-using RigMonitor.Models.DataModels;
 using RigMonitor.Models.DataModels.Miner;
 
 namespace RigMonitor.Models.ViewModels

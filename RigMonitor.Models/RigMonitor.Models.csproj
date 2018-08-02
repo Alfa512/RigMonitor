@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModels\EthNanopoolControl.cs" />
     <Compile Include="DataModels\Miner\AverageHashrateModel.cs" />
     <Compile Include="DataModels\Miner\AverageHashrateData.cs" />
     <Compile Include="DataModels\Miner\AverageHashrateForHoursModel.cs" />
