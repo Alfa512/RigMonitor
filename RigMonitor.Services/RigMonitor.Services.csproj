@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EthNanopoolControlList.cs" />
     <Compile Include="RigMonitorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -90,7 +90,7 @@ namespace RigMonitor.Models.ViewModels
         public string Id { get; set; }
         public int Uid { get; set; }
         public double CurrentHashrate { get; set; } //Worker Current Hashrate
-        public double ReportedHashrate { get; set; } //Worker Current Hashrate
+        public double ReportedHashrate { get; set; } //Worker Reported Hashrate
         public DateTime LastShare { get; set; } //Last Share Date of Worker
         public string LastShareString { get; set; } //Last Share Date of Worker
         public int Rating { get; set; } //Last Share Date of Worker
