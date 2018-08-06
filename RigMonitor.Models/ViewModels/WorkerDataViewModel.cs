@@ -26,11 +26,20 @@ namespace RigMonitor.Models.ViewModels
             Uid = workerData.Uid;
             try
             {
-                CurrentHashrate = Convert.ToDouble(workerData.Hashrate.Replace('.',','));
+                CurrentHashrate = Convert.ToDouble(workerData.Hashrate);
             }
             catch (FormatException)
             {
                 CurrentHashrate = 0;
+            }
+
+            try
+            {
+                ReportedHashrate = Convert.ToDouble(workerData.ReportedHashrate);
+            }
+            catch (FormatException)
+            {
+                ReportedHashrate = 0;
             }
             
             LastShare = new DateTime().AddSeconds(workerData.LastShare);
@@ -39,7 +48,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h1 = Convert.ToDouble(workerData.H1.Replace('.', ','));
+                Avg_h1 = Convert.ToDouble(workerData.H1);
             }
             catch (FormatException)
             {
@@ -48,7 +57,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h3 = Convert.ToDouble(workerData.H3.Replace('.', ','));
+                Avg_h3 = Convert.ToDouble(workerData.H3);
             }
             catch (FormatException)
             {
@@ -57,7 +66,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h6 = Convert.ToDouble(workerData.H6.Replace('.', ','));
+                Avg_h6 = Convert.ToDouble(workerData.H6);
             }
             catch (FormatException)
             {
@@ -66,7 +75,7 @@ namespace RigMonitor.Models.ViewModels
             
             try
             {
-                Avg_h12 = Convert.ToDouble(workerData.H12.Replace('.', ','));
+                Avg_h12 = Convert.ToDouble(workerData.H12);
             }
             catch (FormatException)
             {
@@ -75,7 +84,7 @@ namespace RigMonitor.Models.ViewModels
             
             try
             {
-                Avg_h24 = Convert.ToDouble(workerData.H24.Replace('.', ','));
+                Avg_h24 = Convert.ToDouble(workerData.H24);
             }
             catch (FormatException)
             {

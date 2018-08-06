@@ -9,6 +9,12 @@
     <Grid Margin="0,10,0,0">
 
         <Grid Margin="10,55,10,21">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="992*"/>
+                <ColumnDefinition Width="58*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="19*"/>
+            </Grid.ColumnDefinitions>
             <ListView HorizontalAlignment="Left" Height="416" Margin="10,10,0,0" VerticalAlignment="Top" Width="241">
                 <ListView.View>
                     <GridView>
@@ -24,7 +30,7 @@
             <Label Content="Last Reported Hashrate" HorizontalAlignment="Left" Margin="606,17,0,0" VerticalAlignment="Top" Width="170"/>
             <TextBox Name="BalanceTextBox" HorizontalAlignment="Left" Height="23" Margin="781,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
             <Label Content="Balance" HorizontalAlignment="Left" Margin="781,17,0,0" VerticalAlignment="Top" Width="170"/>
-            <DataGrid x:Name="WorkersTable" Height="355" Margin="256,71,10,0" VerticalAlignment="Top">
+            <DataGrid x:Name="WorkersTable" Height="355" Margin="256,71,10,0" VerticalAlignment="Top" Grid.ColumnSpan="4">
                 <DataGrid.Columns>
 
                     <DataGridTextColumn Header="Worker" Binding="{Binding Id}" />
@@ -35,9 +41,18 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="986,43,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="StartBtn_Click"/>
+            <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="986,-13,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="StartBtn_Click" Grid.ColumnSpan="4"/>
+            <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="986,15,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="StopBtn_Click"/>
+            <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" Margin="986,43,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="RefreshBtn_Click"/>
+            <Button x:Name="TestBtn" Content="Test" HorizontalAlignment="Left" Margin="906,-13,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="TestBtn_Click" />
+            <TextBox x:Name="YPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="841,-13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
+            <TextBox x:Name="XPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="750,-13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
+            <Label Content="Y:" HorizontalAlignment="Left" Margin="817,-13,0,0" VerticalAlignment="Top"/>
+            <Label Content="X:" HorizontalAlignment="Left" Margin="730,-14,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="TargetHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="665,-13,0,0" TextWrapping="Wrap" Text="370" VerticalAlignment="Top" Width="60"/>
+            <Label Content="Target Hashrate:" HorizontalAlignment="Left" Margin="564,-13,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Menu HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" VerticalAlignment="Top" Width="863" Grid.ColumnSpan="2" Background="White" DockPanel.Dock="Top">
+        <Menu HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" VerticalAlignment="Top" Width="562" Background="White" DockPanel.Dock="Top">
             <MenuItem Header="File" Height="40" Width="78">
                 <MenuItem Header="_New" />
                 <MenuItem Header="_Open" />

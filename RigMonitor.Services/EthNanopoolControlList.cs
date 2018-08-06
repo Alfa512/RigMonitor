@@ -5,12 +5,26 @@ using RigMonitor.Models.DataModels;
 
 namespace RigMonitor.Services
 {
-    class EthNanopoolControlList : IEnumerable<EthNanopoolControl>
+    public class EthNanopoolControlList : IEnumerable<EthNanopoolControl>
     {
         EthNanopoolControl head; // головной/первый элемент
         EthNanopoolControl tail; // последний/хвостовой элемент
         int count;  // количество элементов в списке
 
+        public EthNanopoolControl GetHead()
+        {
+            return head;
+        }
+
+        public EthNanopoolControl GetTail()
+        {
+            return tail;
+        }
+
+        public int Length()
+        {
+            return count;
+        }
 
         public void Add(EthNanopoolControl data)
         {
@@ -102,6 +116,31 @@ namespace RigMonitor.Services
             }
             return false;
         }
+
+        public EthNanopoolControl SearchLatest(DateTime data)
+        {
+            var current = head;
+            while (current != null)
+            {
+                if (current.TimeMoment > data)
+                    return current;
+                current = current.Next;
+            }
+            return head;
+        }
+
+        public EthNanopoolControl SearchEarliest(DateTime data)
+        {
+            var current = head;
+            while (current != null)
+            {
+                if (current.TimeMoment < data)
+                    return current;
+                current = current.Next;
+            }
+            return tail;
+        }
+
 
         public bool ContainsByCreationTime(DateTime timeMoment)
         {
