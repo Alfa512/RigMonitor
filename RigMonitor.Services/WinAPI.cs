@@ -249,7 +249,7 @@ namespace RigMonitor.Services
         public static void WindowMove(int x, int y, string windowName, int width, int height)
         {
             IntPtr window = FindWindow(null, windowName);
-            if (window != IntPtr.Zero)
+            if (IntPtr.Zero != window)
                 MoveWindow(window, x, y, width, height, true);
         }
 
