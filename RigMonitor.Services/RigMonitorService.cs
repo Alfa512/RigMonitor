@@ -83,12 +83,12 @@ namespace RigMonitor.Services
                     return false;
                 targetHashrate = targetHashrate - (targetHashrate / 10);
                 var now = WorkersControlList.GetTail();
-                var tenMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-10));
-                var twentyMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-15));
+                var tenMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-8));
+                var twentyMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-12));
                 reported = now.ReportedHashrate;
                 calculated = now.CurrentCalculatedHashrate;
                 if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate && targetHashrate > twentyMinutesAgo.ReportedHashrate)
-                    return false;
+                    return true;
                 //LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} cheched: OK\r\n");
             }
             catch (Exception e)
@@ -97,7 +97,7 @@ namespace RigMonitor.Services
                 return false;
             }
             LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} cheched: OK; Reported: {reported}; Calculated: {calculated}\r\n");
-            return true;
+            return false;
         }
 
         public void RestartRig(int x, int y)
