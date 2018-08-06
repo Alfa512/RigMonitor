@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3C3E7FE5-64D1-4FC9-898A-39C08B14560A}</ProjectGuid>
+    <ProjectGuid>{D51AF2EC-9382-4A49-A091-3FADF9573368}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RigMonitor.Services</RootNamespace>
-    <AssemblyName>RigMonitor.Services</AssemblyName>
+    <RootNamespace>RigMonitor.Contracts</RootNamespace>
+    <AssemblyName>RigMonitor.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,19 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.5.8\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,39 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EthNanopoolControlList.cs" />
-    <Compile Include="LoggerService.cs" />
-    <Compile Include="RigMonitorService.cs" />
+    <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WinAPI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RigMonitor.Api.Nanopool\RigMonitor.Api.Nanopool.csproj">
-      <Project>{D7F2C244-C399-4AAF-B833-F2DDCAB21C6A}</Project>
-      <Name>RigMonitor.Api.Nanopool</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RigMonitor.Common\RigMonitor.Common.csproj">
       <Project>{7C12413B-79EB-4246-87BE-B1214645A475}</Project>
       <Name>RigMonitor.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RigMonitor.Contracts\RigMonitor.Contracts.csproj">
-      <Project>{d51af2ec-9382-4a49-a091-3fadf9573368}</Project>
-      <Name>RigMonitor.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RigMonitor.Models\RigMonitor.Models.csproj">
-      <Project>{EEC86678-5E50-4E14-A84D-41F6C8E73651}</Project>
-      <Name>RigMonitor.Models</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

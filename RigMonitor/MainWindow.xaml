@@ -45,8 +45,8 @@
             <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="986,15,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="StopBtn_Click"/>
             <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" Margin="986,43,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="RefreshBtn_Click"/>
             <Button x:Name="TestBtn" Content="Test" HorizontalAlignment="Left" Margin="906,-13,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="TestBtn_Click" />
-            <TextBox x:Name="YPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="841,-13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
-            <TextBox x:Name="XPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="750,-13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60"/>
+            <TextBox x:Name="XPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="750,-13,0,0" TextWrapping="Wrap" Text="1200" VerticalAlignment="Top" Width="60"/>
+            <TextBox x:Name="YPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="841,-13,0,0" TextWrapping="Wrap" Text="90" VerticalAlignment="Top" Width="60"/>
             <Label Content="Y:" HorizontalAlignment="Left" Margin="817,-13,0,0" VerticalAlignment="Top"/>
             <Label Content="X:" HorizontalAlignment="Left" Margin="730,-14,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="TargetHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="665,-13,0,0" TextWrapping="Wrap" Text="370" VerticalAlignment="Top" Width="60"/>

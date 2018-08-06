@@ -22,7 +22,7 @@ namespace RigMonitor.Services
         [DllImport("user32.dll")]
         static extern IntPtr GetForegroundWindow();
 
-        [DllImport("user32")]
+        [DllImport("user32.dll")]
         public static extern int SetCursorPos(int x, int y);
 
         [DllImport("user32.dll")]

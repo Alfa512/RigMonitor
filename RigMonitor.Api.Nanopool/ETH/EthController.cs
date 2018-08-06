@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Web.Script.Serialization;
-using RigMonitor.Models.DataModels;
 using RigMonitor.Models.DataModels.Miner;
 using RigMonitor.Models.DataModels.Worker;
 using RigMonitor.Models.ViewModels;

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RigMonitor.Api.Nanopool", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RigMonitor.Services", "RigMonitor.Services\RigMonitor.Services.csproj", "{3C3E7FE5-64D1-4FC9-898A-39C08B14560A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RigMonitor.Contracts", "RigMonitor.Contracts\RigMonitor.Contracts.csproj", "{D51AF2EC-9382-4A49-A091-3FADF9573368}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RigMonitor.Common", "RigMonitor.Common\RigMonitor.Common.csproj", "{7C12413B-79EB-4246-87BE-B1214645A475}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{3C3E7FE5-64D1-4FC9-898A-39C08B14560A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C3E7FE5-64D1-4FC9-898A-39C08B14560A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C3E7FE5-64D1-4FC9-898A-39C08B14560A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51AF2EC-9382-4A49-A091-3FADF9573368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51AF2EC-9382-4A49-A091-3FADF9573368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51AF2EC-9382-4A49-A091-3FADF9573368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51AF2EC-9382-4A49-A091-3FADF9573368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C12413B-79EB-4246-87BE-B1214645A475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C12413B-79EB-4246-87BE-B1214645A475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C12413B-79EB-4246-87BE-B1214645A475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C12413B-79EB-4246-87BE-B1214645A475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

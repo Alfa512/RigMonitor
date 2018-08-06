@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using RigMonitor.Models.DataModels.Miner;
 
 namespace RigMonitor.Models.ViewModels
@@ -22,11 +23,16 @@ namespace RigMonitor.Models.ViewModels
 
         public WorkerDataViewModel(WorkerData workerData)
         {
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ".";
+            provider.NumberGroupSeparator = ",";
+            provider.NumberGroupSizes = new [] { 3 };
+
             Id = workerData.Id;
             Uid = workerData.Uid;
             try
             {
-                CurrentHashrate = Convert.ToDouble(workerData.Hashrate);
+                CurrentHashrate = Convert.ToDouble(workerData.Hashrate, provider);
             }
             catch (FormatException)
             {
@@ -35,7 +41,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                ReportedHashrate = Convert.ToDouble(workerData.ReportedHashrate);
+                ReportedHashrate = Convert.ToDouble(workerData.ReportedHashrate, provider);
             }
             catch (FormatException)
             {
@@ -48,7 +54,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h1 = Convert.ToDouble(workerData.H1);
+                Avg_h1 = Convert.ToDouble(workerData.H1, provider);
             }
             catch (FormatException)
             {
@@ -57,7 +63,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h3 = Convert.ToDouble(workerData.H3);
+                Avg_h3 = Convert.ToDouble(workerData.H3, provider);
             }
             catch (FormatException)
             {
@@ -66,7 +72,7 @@ namespace RigMonitor.Models.ViewModels
 
             try
             {
-                Avg_h6 = Convert.ToDouble(workerData.H6);
+                Avg_h6 = Convert.ToDouble(workerData.H6, provider);
             }
             catch (FormatException)
             {
@@ -75,7 +81,7 @@ namespace RigMonitor.Models.ViewModels
             
             try
             {
-                Avg_h12 = Convert.ToDouble(workerData.H12);
+                Avg_h12 = Convert.ToDouble(workerData.H12, provider);
             }
             catch (FormatException)
             {
@@ -84,7 +90,7 @@ namespace RigMonitor.Models.ViewModels
             
             try
             {
-                Avg_h24 = Convert.ToDouble(workerData.H24);
+                Avg_h24 = Convert.ToDouble(workerData.H24, provider);
             }
             catch (FormatException)
             {
