@@ -55,7 +55,11 @@ namespace RigMonitor.Services
                     WorkersControlList.Add(controlData);
 
                     var result = CheckRig(WorkerId, TargetHashrate);
-                    if (result && restartedTime < DateTime.Now.AddMinutes(-15))
+                    if (result)
+                    {
+                        LoggerService.LogInfo($"Restartable. Last restart: {restartedTime:G}; Time Check: {DateTime.Now.AddMinutes(-10):G};");
+                    }
+                    if (result && restartedTime < DateTime.Now.AddMinutes(-10))
                     {
                         RestartRig(XPointer, YPointer);
                         restartedTime = DateTime.Now;
@@ -69,7 +73,7 @@ namespace RigMonitor.Services
                     LoggerService.LogError($"{DateTime.Now:G} : Error: {e.Message} \r\n {e.InnerException?.Message} \r\n");
                 }
 
-                Thread.Sleep(240000);
+                Thread.Sleep(180000);
             }
         }
 
@@ -89,6 +93,8 @@ namespace RigMonitor.Services
                 calculated = now.CurrentCalculatedHashrate;
                 if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate && targetHashrate > twentyMinutesAgo.ReportedHashrate)
                     return true;
+                LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; 8 min: {tenMinutesAgo.ReportedHashrate}; 12 min: {twentyMinutesAgo.ReportedHashrate}");
+
                 //LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} cheched: OK\r\n");
             }
             catch (Exception e)
@@ -96,7 +102,7 @@ namespace RigMonitor.Services
                 LoggerService.LogError($"{DateTime.Now:G} : Error: {e.Message} \r\n {e.InnerException?.Message}\r\n");
                 return false;
             }
-            LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} cheched: OK; Reported: {reported}; Calculated: {calculated}\r\n");
+            LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; Reported: {reported}; Calculated: {calculated}\r\n");
             return false;
         }
 
