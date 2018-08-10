@@ -21,8 +21,8 @@ namespace RigMonitor.Services
         {
             EthController = new EthController();
             WorkersControlList = new EthNanopoolControlList();
-            XPointer = 960;
-            YPointer = 540;
+            XPointer = 1200;
+            YPointer = 90;
             LoggerService = new LoggerService("RigMonitorServiceLogger");
 
             //var config = new NLog.Config.LoggingConfiguration();
@@ -38,7 +38,8 @@ namespace RigMonitor.Services
 
         public void RestartByWatchDogIfNoReport()
         {
-            DateTime restartedTime = DateTime.Now.AddMinutes(-10);
+            int resetInterval = -13;
+            DateTime restartedTime = DateTime.Now.AddMinutes(resetInterval);
             while (true)
             {
                 try
@@ -57,13 +58,13 @@ namespace RigMonitor.Services
                     var result = CheckRig(WorkerId, TargetHashrate);
                     if (result)
                     {
-                        LoggerService.LogInfo($"Restartable. Last restart: {restartedTime:G}; Time Check: {DateTime.Now.AddMinutes(-10):G};");
+                        LoggerService.LogInfo($"Restartable. Last restart: {restartedTime:G}; Time Check: {DateTime.Now.AddMinutes(resetInterval):G};");
                     }
-                    if (result && restartedTime < DateTime.Now.AddMinutes(-10))
+                    if (result && restartedTime < DateTime.Now.AddMinutes(resetInterval))
                     {
                         RestartRig(XPointer, YPointer);
                         restartedTime = DateTime.Now;
-                        LoggerService.LogInfo($"{controlData.Worker.Id} restarted: {restartedTime:G};\r\n");
+                        LoggerService.LogInfo($"{controlData.Worker.Id} restarted: {restartedTime:G}; X:{XPointer}, Y:{YPointer};\r\n");
                     }
                     if (WorkersControlList.GetHead().TimeMoment < DateTime.Now.AddHours(-5))
                         WorkersControlList.Remove(WorkersControlList.GetHead());
@@ -91,7 +92,7 @@ namespace RigMonitor.Services
                 var twentyMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-12));
                 reported = now.ReportedHashrate;
                 calculated = now.CurrentCalculatedHashrate;
-                if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate && targetHashrate > twentyMinutesAgo.ReportedHashrate)
+                if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate /*&& targetHashrate > twentyMinutesAgo.ReportedHashrate*/)
                     return true;
                 LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; 8 min: {tenMinutesAgo.ReportedHashrate}; 12 min: {twentyMinutesAgo.ReportedHashrate}");
 
@@ -111,7 +112,46 @@ namespace RigMonitor.Services
             try
             {
                 WinAPI.MouseMove(x, y);
+                Thread.Sleep(500);
                 WinAPI.MouseClick("left");
+                Thread.Sleep(500);
+                WinAPI.MouseClick("left");
+            }
+            catch (Exception e)
+            {
+                LoggerService.LogError($"{DateTime.Now.ToString("G")} : Error: {e.Message} \r\n {e.InnerException?.Message} \r\n");
+            }
+        }
+        public void RestartRig()
+        {
+            try
+            {
+                RestartRig(XPointer, YPointer);
+            }
+            catch (Exception e)
+            {
+                LoggerService.LogError($"{DateTime.Now.ToString("G")} : Error: {e.Message} \r\n {e.InnerException?.Message} \r\n");
+            }
+        }
+
+        public void MouseMoveTest(int x, int y)
+        {
+            try
+            {
+                WinAPI.MouseMove(x, y);
+                Thread.Sleep(100);
+            }
+            catch (Exception e)
+            {
+                LoggerService.LogError($"{DateTime.Now.ToString("G")} : Error: {e.Message} \r\n {e.InnerException?.Message} \r\n");
+            }
+        }
+
+        public void MouseMoveTest()
+        {
+            try
+            {
+                MouseMoveTest(XPointer, YPointer);
             }
             catch (Exception e)
             {

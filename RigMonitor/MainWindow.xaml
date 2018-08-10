@@ -51,6 +51,7 @@
             <Label Content="X:" HorizontalAlignment="Left" Margin="730,-14,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="TargetHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="665,-13,0,0" TextWrapping="Wrap" Text="370" VerticalAlignment="Top" Width="60"/>
             <Label Content="Target Hashrate:" HorizontalAlignment="Left" Margin="564,-13,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="TestResetBtn" Content="Test Reset" HorizontalAlignment="Left" Margin="906,15,0,0" VerticalAlignment="Top" Width="75" Height="23" Foreground="Red" Click="TestResetBtn_Click" />
         </Grid>
         <Menu HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" VerticalAlignment="Top" Width="562" Background="White" DockPanel.Dock="Top">
             <MenuItem Header="File" Height="40" Width="78">
