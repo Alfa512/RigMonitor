@@ -122,7 +122,7 @@ namespace RigMonitor.Services
             var current = head;
             while (current != null)
             {
-                if (current.TimeMoment > data)
+                if (current.TimeMoment < data)
                     return current;
                 current = current.Next;
             }
@@ -134,7 +134,7 @@ namespace RigMonitor.Services
             var current = head;
             while (current != null)
             {
-                if (current.TimeMoment < data)
+                if (current.TimeMoment > data)
                     return current;
                 current = current.Next;
             }
