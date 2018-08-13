@@ -38,7 +38,7 @@ namespace RigMonitor.Services
 
         public void RestartByWatchDogIfNoReport()
         {
-            int resetInterval = -13;
+            int resetInterval = -22;
             DateTime restartedTime = DateTime.Now.AddMinutes(resetInterval);
             while (true)
             {
@@ -84,17 +84,17 @@ namespace RigMonitor.Services
             double calculated = 0;
             try
             {
-                if (WorkersControlList.Count < 4)
+                if (WorkersControlList.Count < 5)
                     return false;
                 targetHashrate = targetHashrate - (targetHashrate / 10);
                 var now = WorkersControlList.GetTail();
-                var tenMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-8));
-                var twentyMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-12));
+                var tenMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-7));
+                var twentyMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-10));
                 reported = now.ReportedHashrate;
                 calculated = now.CurrentCalculatedHashrate;
-                if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate /*&& targetHashrate > twentyMinutesAgo.ReportedHashrate*/)
+                if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate && targetHashrate > twentyMinutesAgo.ReportedHashrate)
                     return true;
-                LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; 8 min: {tenMinutesAgo.ReportedHashrate}; 12 min: {twentyMinutesAgo.ReportedHashrate}");
+                LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; 7 min: {tenMinutesAgo.ReportedHashrate}; 10 min: {twentyMinutesAgo.ReportedHashrate}");
 
                 //LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} cheched: OK\r\n");
             }
