@@ -80,18 +80,17 @@ namespace RigMonitor.Services
 
         public bool CheckRig(string workerId, int targetHashrate)
         {
-            double reported = 0;
-            double calculated = 0;
             try
             {
-                if (WorkersControlList.Count < 5)
+                if (WorkersControlList.Count < 8)
                     return false;
                 targetHashrate = targetHashrate - (targetHashrate / 10);
                 var now = WorkersControlList.GetTail();
                 var tenMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-7));
                 var twentyMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-10));
-                reported = now.ReportedHashrate;
-                calculated = now.CurrentCalculatedHashrate;
+                var reported = now.ReportedHashrate;
+                var calculated = now.CurrentCalculatedHashrate;
+                LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; Reported: {reported}; Calculated: {calculated}\r\n");
                 if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate && targetHashrate > twentyMinutesAgo.ReportedHashrate)
                     return true;
                 LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; 7 min: {tenMinutesAgo.ReportedHashrate}; 10 min: {twentyMinutesAgo.ReportedHashrate}");
@@ -103,7 +102,6 @@ namespace RigMonitor.Services
                 LoggerService.LogError($"{DateTime.Now:G} : Error: {e.Message} \r\n {e.InnerException?.Message}\r\n");
                 return false;
             }
-            LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; Reported: {reported}; Calculated: {calculated}\r\n");
             return false;
         }
 
