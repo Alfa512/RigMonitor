@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -16,11 +17,18 @@ namespace RigMonitor
         public EthController EthController;
         public Thread RigRestarter;
         public LoggerService LoggerService;
+        public string DefaultXpointer { get; set; }
+        public string DefaultYpointer { get; set; }
+
         public MainWindow()
         {
             EthController = new EthController();
             InitializeComponent();
             LoggerService = new LoggerService("MainInterfaceLogger");
+            DefaultXpointer = ConfigurationSettings.AppSettings["PointerX"];
+            DefaultYpointer = ConfigurationSettings.AppSettings["PointerY"];
+            XPointerTextBox.Text = DefaultXpointer ?? XPointerTextBox.Text;
+            YPointerTextBox.Text = DefaultYpointer ?? YPointerTextBox.Text;
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
