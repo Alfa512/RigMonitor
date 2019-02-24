@@ -15,7 +15,7 @@ namespace RigMonitor.Services
         public int XPointer;
         public int YPointer;
         public LoggerService LoggerService;
-
+        public int ResetInterval;
 
         public RigMonitorService()
         {
@@ -38,12 +38,13 @@ namespace RigMonitor.Services
 
         public void RestartByWatchDogIfNoReport()
         {
-            int resetInterval = -22;
+            int resetInterval = ResetInterval <= 0 ? -22 : ResetInterval * (-1);
             DateTime restartedTime = DateTime.Now.AddMinutes(resetInterval);
             while (true)
             {
                 try
                 {
+
                     //LoggerService.LogError($"{DateTime.Now.ToString("G")} : Test: Iterarion {WorkersControlList.Count}");
                     var workersData = EthController.GetAllWorkersData();
                     var worker = workersData.FirstOrDefault(r => r.Id.ToLower().Equals(WorkerId.ToLower()));
@@ -62,6 +63,8 @@ namespace RigMonitor.Services
                     }
                     if (result && restartedTime < DateTime.Now.AddMinutes(resetInterval))
                     {
+                        RestartRig(XPointer-50, YPointer-55);
+                        Thread.Sleep(1500);
                         RestartRig(XPointer, YPointer);
                         restartedTime = DateTime.Now;
                         LoggerService.LogInfo($"{controlData.Worker.Id} restarted: {restartedTime:G}; X:{XPointer}, Y:{YPointer};\r\n");
@@ -82,18 +85,20 @@ namespace RigMonitor.Services
         {
             try
             {
-                if (WorkersControlList.Count < 8)
+                int resetInterval = ResetInterval <= 0 ? -22 : ResetInterval * (-1);
+
+                if (WorkersControlList.Count < Convert.ToInt32(resetInterval / 3) + 1)
                     return false;
                 targetHashrate = targetHashrate - (targetHashrate / 10);
                 var now = WorkersControlList.GetTail();
-                var tenMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-7));
-                var twentyMinutesAgo = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(-10));
+                var firstInterval = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(Convert.ToInt32(resetInterval *0.5)));
+                var secondInterval = WorkersControlList.SearchEarliest(DateTime.Now.AddMinutes(resetInterval));
                 var reported = now.ReportedHashrate;
                 var calculated = now.CurrentCalculatedHashrate;
                 LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; Reported: {reported}; Calculated: {calculated}\r\n");
-                if (targetHashrate > now.ReportedHashrate && targetHashrate > tenMinutesAgo.ReportedHashrate && targetHashrate > twentyMinutesAgo.ReportedHashrate)
+                if (targetHashrate > now.ReportedHashrate && targetHashrate > firstInterval.ReportedHashrate && targetHashrate > secondInterval.ReportedHashrate)
                     return true;
-                LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; 7 min: {tenMinutesAgo.ReportedHashrate}; 10 min: {twentyMinutesAgo.ReportedHashrate}");
+                LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} checked: OK; {Convert.ToInt32(resetInterval * 0.5)} min: {firstInterval.ReportedHashrate}; 10 min: {secondInterval.ReportedHashrate}");
 
                 //LoggerService.LogInfo($"{DateTime.Now:G} - {workerId} cheched: OK\r\n");
             }

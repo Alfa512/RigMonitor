@@ -4,24 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RigMonitor"
+        xmlns:simpleSample="clr-namespace:SimpleSample"
+        xmlns:control="clr-namespace:LoadingControl.Control"
         mc:Ignorable="d"
-        Title="MainWindow" Height="552.632" Width="1098.685">
+        Title="MainWindow" Height="552.632" Width="1098.685" MaxWidth="1100">
     <Grid Margin="0,10,0,0">
 
         <Grid Margin="10,55,10,21">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="992*"/>
                 <ColumnDefinition Width="58*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2"/>
                 <ColumnDefinition Width="19*"/>
             </Grid.ColumnDefinitions>
-            <ListView HorizontalAlignment="Left" Height="416" Margin="10,10,0,0" VerticalAlignment="Top" Width="241">
+            <ListView HorizontalAlignment="Left" Margin="10,10,0,0" Width="241" Height="206" VerticalAlignment="Top">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn/>
                     </GridView>
                 </ListView.View>
             </ListView>
+            <TextBox Name="ConsoleTextBox" Margin="10,225,0,10" TextWrapping="Wrap" Text="" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="241" >
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="0.971"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.483"/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
+            </TextBox>
+            <Label Name="LoadingSpinner" Width="98" Margin="17,107,0,0" Height="98" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <!--<simpleSample:LoadingWait Width="28"></simpleSample:LoadingWait>-->
+                <control:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Label>
             <TextBox Name="CurrentCalculatedHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="256,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
             <Label Content="Current Calculated Hashrate" HorizontalAlignment="Left" Margin="256,17,0,0" VerticalAlignment="Top" Width="170" Height="26"/>
             <TextBox Name="AverageHashrate6HoursTextBox" HorizontalAlignment="Left" Height="23" Margin="431,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
@@ -30,7 +46,7 @@
             <Label Content="Last Reported Hashrate" HorizontalAlignment="Left" Margin="606,17,0,0" VerticalAlignment="Top" Width="170"/>
             <TextBox Name="BalanceTextBox" HorizontalAlignment="Left" Height="23" Margin="781,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
             <Label Content="Balance" HorizontalAlignment="Left" Margin="781,17,0,0" VerticalAlignment="Top" Width="170"/>
-            <DataGrid x:Name="WorkersTable" Height="355" Margin="256,71,10,0" VerticalAlignment="Top" Grid.ColumnSpan="4">
+            <DataGrid x:Name="WorkersTable" Margin="256,71,10,10" Grid.ColumnSpan="4">
                 <DataGrid.Columns>
 
                     <DataGridTextColumn Header="Worker" Binding="{Binding Id}" />
@@ -52,6 +68,7 @@
             <TextBox x:Name="TargetHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="665,-13,0,0" TextWrapping="Wrap" Text="370" VerticalAlignment="Top" Width="60"/>
             <Label Content="Target Hashrate:" HorizontalAlignment="Left" Margin="564,-13,0,0" VerticalAlignment="Top"/>
             <Button x:Name="TestResetBtn" Content="Test Reset" HorizontalAlignment="Left" Margin="906,15,0,0" VerticalAlignment="Top" Width="75" Height="23" Foreground="Red" Click="TestResetBtn_Click" />
+
         </Grid>
         <Menu HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" VerticalAlignment="Top" Width="562" Background="White" DockPanel.Dock="Top">
             <MenuItem Header="File" Height="40" Width="78">
@@ -63,6 +80,9 @@
             </MenuItem>
             <MenuItem Header="Edit" Height="40" Width="100"/>
         </Menu>
-
+        <Label Content="Processes:" HorizontalAlignment="Left" Margin="991,16,0,0" Height="26" VerticalAlignment="Top"/>
+        <Label Name="ProcessesCount" Content="0" HorizontalAlignment="Left" Margin="1051,17,0,0" FontWeight="Bold" Height="26" VerticalAlignment="Top"/>
+        <Label Name="MonStarted" Margin="923,17,0,0" HorizontalAlignment="Left" Width="62" Background="Transparent" Foreground="#FF01B633" FontWeight="Bold" Height="25" VerticalAlignment="Top">STARTED</Label>
+        <Label Name="MonStopped" Margin="923,17,0,0" HorizontalAlignment="Left" Width="63" Background="Transparent" Foreground="Red" FontWeight="Bold" Height="25" VerticalAlignment="Top">STOPPED</Label>
     </Grid>
 </Window>

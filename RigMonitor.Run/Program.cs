@@ -38,7 +38,7 @@ namespace RigMonitor.Run
                 Console.ReadLine();
 
                 OnStop();
-
+                rigRestarter.Abort();
                 Console.WriteLine(string.Format("{0}::stopped", GetType().FullName));
             }
             catch (Exception e)
@@ -49,6 +49,11 @@ namespace RigMonitor.Run
                 Console.WriteLine(e);
                 Console.ReadLine();
                 rigRestarter.Abort();
+            }
+            finally
+            {
+                if (rigRestarter.IsAlive)
+                    rigRestarter.Abort();
             }
 
         }
