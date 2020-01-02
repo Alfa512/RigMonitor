@@ -7,82 +7,111 @@
         xmlns:simpleSample="clr-namespace:SimpleSample"
         xmlns:control="clr-namespace:LoadingControl.Control"
         mc:Ignorable="d"
-        Title="MainWindow" Height="552.632" Width="1098.685" MaxWidth="1100">
+        Title="MainWindow" Height="565" Width="1100" MaxWidth="1100">
     <Grid Margin="0,10,0,0">
 
-        <Grid Margin="10,55,10,21">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="992*"/>
-                <ColumnDefinition Width="58*"/>
-                <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="19*"/>
-            </Grid.ColumnDefinitions>
-            <ListView HorizontalAlignment="Left" Margin="10,10,0,0" Width="241" Height="206" VerticalAlignment="Top">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <TextBox Name="ConsoleTextBox" Margin="10,225,0,10" TextWrapping="Wrap" Text="" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="241" >
-                <TextBox.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="0.971"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="0.483"/>
-                    </TransformGroup>
-                </TextBox.RenderTransform>
-            </TextBox>
-            <Label Name="LoadingSpinner" Width="98" Margin="17,107,0,0" Height="98" VerticalAlignment="Top" HorizontalAlignment="Left">
-                <!--<simpleSample:LoadingWait Width="28"></simpleSample:LoadingWait>-->
-                <control:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Label>
-            <TextBox Name="CurrentCalculatedHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="256,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
-            <Label Content="Current Calculated Hashrate" HorizontalAlignment="Left" Margin="256,17,0,0" VerticalAlignment="Top" Width="170" Height="26"/>
-            <TextBox Name="AverageHashrate6HoursTextBox" HorizontalAlignment="Left" Height="23" Margin="431,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
-            <Label Content="Average Hashrate 6 Hours" HorizontalAlignment="Left" Margin="431,17,0,0" VerticalAlignment="Top" Width="170"/>
-            <TextBox Name="LastReportedHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="606,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
-            <Label Content="Last Reported Hashrate" HorizontalAlignment="Left" Margin="606,17,0,0" VerticalAlignment="Top" Width="170"/>
-            <TextBox Name="BalanceTextBox" HorizontalAlignment="Left" Height="23" Margin="781,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
-            <Label Content="Balance" HorizontalAlignment="Left" Margin="781,17,0,0" VerticalAlignment="Top" Width="170"/>
-            <DataGrid x:Name="WorkersTable" Margin="256,71,10,10" Grid.ColumnSpan="4">
-                <DataGrid.Columns>
-
-                    <DataGridTextColumn Header="Worker" Binding="{Binding Id}" />
-                    <DataGridTextColumn Header="Last Share" Binding="{Binding LastShareString}" />
-                    <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" />
-                    <DataGridTextColumn Header="Now" Binding="{Binding CurrentHashrate}" />
-                    <DataGridTextColumn Header="Reported" Binding="{Binding ReportedHashrate}" />
-
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button x:Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="986,-13,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="StartBtn_Click" Grid.ColumnSpan="4"/>
-            <Button x:Name="StopBtn" Content="Stop" HorizontalAlignment="Left" Margin="986,15,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="StopBtn_Click"/>
-            <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" Margin="986,43,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="RefreshBtn_Click"/>
-            <Button x:Name="TestBtn" Content="Test" HorizontalAlignment="Left" Margin="906,-13,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="TestBtn_Click" />
-            <TextBox x:Name="XPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="750,-13,0,0" TextWrapping="Wrap" Text="1200" VerticalAlignment="Top" Width="60"/>
-            <TextBox x:Name="YPointerTextBox" HorizontalAlignment="Left" Height="23" Margin="841,-13,0,0" TextWrapping="Wrap" Text="90" VerticalAlignment="Top" Width="60"/>
-            <Label Content="Y:" HorizontalAlignment="Left" Margin="817,-13,0,0" VerticalAlignment="Top"/>
-            <Label Content="X:" HorizontalAlignment="Left" Margin="730,-14,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="TargetHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="665,-13,0,0" TextWrapping="Wrap" Text="370" VerticalAlignment="Top" Width="60"/>
-            <Label Content="Target Hashrate:" HorizontalAlignment="Left" Margin="564,-13,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="TestResetBtn" Content="Test Reset" HorizontalAlignment="Left" Margin="906,15,0,0" VerticalAlignment="Top" Width="75" Height="23" Foreground="Red" Click="TestResetBtn_Click" />
-
-        </Grid>
-        <Menu HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" VerticalAlignment="Top" Width="562" Background="White" DockPanel.Dock="Top">
-            <MenuItem Header="File" Height="40" Width="78">
+        <Menu HorizontalAlignment="Left" Height="26" Margin="10,0,0,0" VerticalAlignment="Top" Width="562" Background="White" DockPanel.Dock="Top">
+            <MenuItem Header="File" Height="24" Width="78">
                 <MenuItem Header="_New" />
                 <MenuItem Header="_Open" />
                 <MenuItem Header="_Save" />
                 <Separator />
                 <MenuItem Header="_Exit" />
             </MenuItem>
-            <MenuItem Header="Edit" Height="40" Width="100"/>
+            <MenuItem Header="Edit" Height="24" Width="100"/>
         </Menu>
-        <Label Content="Processes:" HorizontalAlignment="Left" Margin="991,16,0,0" Height="26" VerticalAlignment="Top"/>
-        <Label Name="ProcessesCount" Content="0" HorizontalAlignment="Left" Margin="1051,17,0,0" FontWeight="Bold" Height="26" VerticalAlignment="Top"/>
-        <Label Name="MonStarted" Margin="923,17,0,0" HorizontalAlignment="Left" Width="62" Background="Transparent" Foreground="#FF01B633" FontWeight="Bold" Height="25" VerticalAlignment="Top">STARTED</Label>
-        <Label Name="MonStopped" Margin="923,17,0,0" HorizontalAlignment="Left" Width="63" Background="Transparent" Foreground="Red" FontWeight="Bold" Height="25" VerticalAlignment="Top">STOPPED</Label>
+
+        <TabControl HorizontalAlignment="Left" Margin="10,26,0,10" Width="1071">
+            <TabItem Header="Rig 0">
+                <Grid Margin="0,3,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="992*"/>
+                        <ColumnDefinition Width="28*"/>
+                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="2"/>
+                        <ColumnDefinition Width="19*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListView HorizontalAlignment="Left" Margin="10,10,0,0" Width="241" Height="206" VerticalAlignment="Top">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <TextBox Name="ConsoleTextBox" Margin="10,225,0,10" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="241" FontWeight="Bold" >
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="0.971"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0.483"/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                    <Label Name="LoadingSpinnerRig0" Width="98" Margin="17,107,0,0" Height="98" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <!--<simpleSample:LoadingWait Width="28"></simpleSample:LoadingWait>-->
+                        <control:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Label>
+                    <TextBox Name="CurrentCalculatedHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="256,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
+                    <Label Content="Current Calculated Hashrate" HorizontalAlignment="Left" Margin="256,36,0,0" VerticalAlignment="Top" Width="170" Height="26"/>
+                    <TextBox Name="AverageHashrate6HoursTextBox" HorizontalAlignment="Left" Height="23" Margin="431,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
+                    <Label Content="Average Hashrate 6 Hours" HorizontalAlignment="Left" Margin="431,36,0,0" VerticalAlignment="Top" Width="170"/>
+                    <TextBox Name="LastReportedHashrateTextBox" HorizontalAlignment="Left" Height="23" Margin="606,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
+                    <Label Content="Last Reported Hashrate" HorizontalAlignment="Left" Margin="606,36,0,0" VerticalAlignment="Top" Width="170"/>
+                    <TextBox Name="BalanceTextBox" HorizontalAlignment="Left" Height="23" Margin="781,62,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170"/>
+                    <Label Content="Balance" HorizontalAlignment="Left" Margin="781,36,0,0" VerticalAlignment="Top" Width="170"/>
+                    <DataGrid x:Name="WorkersTable" Margin="256,89,10,10" Grid.ColumnSpan="5">
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="Worker" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Last Share" Binding="{Binding LastShareString}" />
+                            <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" />
+                            <DataGridTextColumn Header="Now" Binding="{Binding CurrentHashrate}" />
+                            <DataGridTextColumn Header="Reported" Binding="{Binding ReportedHashrate}" />
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="StartBtnRig0" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="23" Click="StartBtnRig0_Click" Grid.ColumnSpan="4" Grid.Column="1" Margin="0,6,0,0"/>
+                    <Button x:Name="StopBtnRig0" Content="Stop" HorizontalAlignment="Left" Margin="0,34,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="StopBtnRig0_Click" Grid.Column="1"/>
+                    <Button x:Name="RefreshBtnRig0" Content="Refresh" HorizontalAlignment="Left" Margin="0,62,0,0" VerticalAlignment="Top" Width="75" Height="23" Grid.ColumnSpan="4" Click="RefreshBtnRig0_Click" Grid.Column="1"/>
+                    <Button x:Name="TestBtnRig0" Content="Test" HorizontalAlignment="Left" Margin="906,6,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="TestBtnRig0_Click" />
+                    <TextBox x:Name="XPointerTextBoxRig0" HorizontalAlignment="Left" Height="23" Margin="750,6,0,0" TextWrapping="Wrap" Text="1200" VerticalAlignment="Top" Width="60"/>
+                    <TextBox x:Name="YPointerTextBoxRig0" HorizontalAlignment="Left" Height="23" Margin="841,6,0,0" TextWrapping="Wrap" Text="90" VerticalAlignment="Top" Width="60"/>
+                    <Label Content="Y:" HorizontalAlignment="Left" Margin="815,2,0,0" VerticalAlignment="Top"/>
+                    <Label Content="X:" HorizontalAlignment="Left" Margin="730,2,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TargetHashrateTextBoxRig0" HorizontalAlignment="Left" Height="23" Margin="665,6,0,0" TextWrapping="Wrap" Text="400" VerticalAlignment="Top" Width="60"/>
+                    <Label Content="Target Hashrate:" HorizontalAlignment="Left" Margin="564,6,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="TestResetBtnRig0" Content="Test Reset" HorizontalAlignment="Left" Margin="906,34,0,0" VerticalAlignment="Top" Width="75" Height="23" Foreground="Red" Click="TestResetBtnRig0_Click" />
+
+                    <Label Content="Processes:" Margin="956,-31,23,0" Height="24" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+                    <Label Name="ProcessesCountRig0" Content="0" Margin="10,-30,7,452" FontWeight="Bold" Grid.Column="2" Grid.ColumnSpan="3"/>
+                    <Label Name="MonStartedRig0" Margin="882,-28,0,0" HorizontalAlignment="Left" Width="62" Background="Transparent" Foreground="#FF01B633" FontWeight="Bold" Height="25" VerticalAlignment="Top">STARTED</Label>
+                    <Label Name="MonStoppedRig0" Margin="882,-28,0,0" HorizontalAlignment="Left" Width="63" Background="Transparent" Foreground="Red" FontWeight="Bold" Height="25" VerticalAlignment="Top">STOPPED</Label>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Rig4">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="StartBtnRig4" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="23" Click="StartBtnRig4_Click" Margin="986,6,0,0"/>
+                    <Button x:Name="StopBtnRig4" Content="Stop" HorizontalAlignment="Left" Margin="986,34,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="StopBtnRig4_Click"/>
+                    <Button x:Name="TestBtnRig4" Content="Test" HorizontalAlignment="Left" Margin="906,6,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="TestBtnRig4_Click" />
+                    <TextBox x:Name="XPointerTextBoxRig4" HorizontalAlignment="Left" Height="23" Margin="750,6,0,0" TextWrapping="Wrap" Text="200" VerticalAlignment="Top" Width="60"/>
+                    <TextBox x:Name="YPointerTextBoxRig4" HorizontalAlignment="Left" Height="23" Margin="841,6,0,0" TextWrapping="Wrap" Text="90" VerticalAlignment="Top" Width="60"/>
+                    <Label Content="Y:" HorizontalAlignment="Left" Margin="815,2,0,0" VerticalAlignment="Top"/>
+                    <Label Content="X:" HorizontalAlignment="Left" Margin="730,2,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TargetHashrateTextBoxRig4" HorizontalAlignment="Left" Height="23" Margin="665,6,0,0" TextWrapping="Wrap" Text="309" VerticalAlignment="Top" Width="60"/>
+                    <Label Content="Target Hashrate:" HorizontalAlignment="Left" Margin="564,6,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="TestResetBtnRig4" Content="Test Reset" HorizontalAlignment="Left" Margin="906,34,0,0" VerticalAlignment="Top" Width="75" Height="23" Foreground="Red" Click="TestResetBtnRig4_Click" />
+
+                    <Label Content="Processes:" Margin="956,-28,23,0" Height="24" VerticalAlignment="Top"/>
+                    <Label Name="ProcessesCountRig4" Content="0" Margin="1025,-28,20,450" FontWeight="Bold"/>
+                    <Label Name="MonStartedRig4" Margin="882,-28,0,0" HorizontalAlignment="Left" Width="62" Background="Transparent" Foreground="#FF01B633" FontWeight="Bold" Height="25" VerticalAlignment="Top">STARTED</Label>
+                    <Label Name="MonStoppedRig4" Margin="882,-28,0,0" HorizontalAlignment="Left" Width="63" Background="Transparent" Foreground="Red" FontWeight="Bold" Height="25" VerticalAlignment="Top">STOPPED</Label>
+                    <TextBox x:Name="XPointerOffsetTbRig4" HorizontalAlignment="Left" Height="23" Margin="727,36,0,0" TextWrapping="Wrap" Text="400" VerticalAlignment="Top" Width="60"/>
+                    <TextBox x:Name="YPointerOffsetTbRig4" HorizontalAlignment="Left" Height="23" Margin="841,36,0,0" TextWrapping="Wrap" Text="90" VerticalAlignment="Top" Width="60"/>
+                    <Label Content="Y offset:" HorizontalAlignment="Left" Margin="790,32,0,0" VerticalAlignment="Top"/>
+                    <Label Content="X offset:" HorizontalAlignment="Left" Margin="673,32,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

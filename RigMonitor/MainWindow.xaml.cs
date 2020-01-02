@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
@@ -17,11 +18,19 @@ namespace RigMonitor
     {
         public EthController EthController;
         public Thread RigRestarter;
+        public Thread RigRestarterRig4;
         public LoggerService LoggerService;
         public string DefaultXpointer { get; set; }
         public string DefaultYpointer { get; set; }
+        public string Rig4Xpointer { get; set; }
+        public string Rig4Ypointer { get; set; }
+        public string Rig4Xoffset { get; set; }
+        public string Rig4Yoffset { get; set; }
         private int ProcessCount { get; set; }
+        private int ProcessCountRig4 { get; set; }
         public int ResetInterval;
+
+        public List<RigMonitorService> Rigs;
 
         public MainWindow()
         {
@@ -30,34 +39,47 @@ namespace RigMonitor
             LoggerService = new LoggerService("MainInterfaceLogger");
             DefaultXpointer = ConfigurationSettings.AppSettings["PointerX"];
             DefaultYpointer = ConfigurationSettings.AppSettings["PointerY"];
+            Rig4Xpointer = ConfigurationSettings.AppSettings["PointerXRig4"];
+            Rig4Ypointer = ConfigurationSettings.AppSettings["PointerYRig4"];
+            Rig4Xoffset = ConfigurationSettings.AppSettings["PointerXOffsetRig4"];
+            Rig4Yoffset = ConfigurationSettings.AppSettings["PointerYOffsetRig4"];
             ResetInterval = Convert.ToInt32(ConfigurationSettings.AppSettings["ResetInterval"]);
-            XPointerTextBox.Text = DefaultXpointer ?? XPointerTextBox.Text;
-            YPointerTextBox.Text = DefaultYpointer ?? YPointerTextBox.Text;
+            XPointerTextBoxRig0.Text = DefaultXpointer ?? XPointerTextBoxRig0.Text;
+            YPointerTextBoxRig0.Text = DefaultYpointer ?? YPointerTextBoxRig0.Text;
+            XPointerTextBoxRig4.Text = Rig4Xpointer ?? XPointerTextBoxRig4.Text;
+            YPointerTextBoxRig4.Text = Rig4Ypointer ?? YPointerTextBoxRig4.Text;
+            XPointerOffsetTbRig4.Text = Rig4Xoffset ?? XPointerOffsetTbRig4.Text;
+            YPointerOffsetTbRig4.Text = Rig4Yoffset ?? YPointerOffsetTbRig4.Text;
+
             InitElements();
             //Auto start
-            StartOnlineMonitor();
+            StartOnlineMonitor(0);
+            StartOnlineMonitorRig4(4);
         }
 
         private void InitElements()
         {
             ProcessCount = 0;
+            Rigs = new List<RigMonitorService>();
             this.Dispatcher.Invoke(() =>
             {
-                MonStarted.Visibility = Visibility.Hidden;
-                MonStopped.Visibility = Visibility.Hidden;
+                MonStartedRig0.Visibility = Visibility.Hidden;
+                MonStoppedRig0.Visibility = Visibility.Hidden;
+
+                
             });
         }
 
-        private void StartBtn_Click(object sender, RoutedEventArgs e)
+        private void StartBtnRig0_Click(object sender, RoutedEventArgs e)
         {
-            StartOnlineMonitor();
+            StartOnlineMonitor(0);
         }
 
-        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        private void StopBtnRig0_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Stopped();
+                StoppedRig0();
                 if (RigRestarter?.IsAlive == true)
                 {
                     RigRestarter.Abort();
@@ -76,7 +98,7 @@ namespace RigMonitor
             }
         }
 
-        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
+        private void RefreshBtnRig0_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -95,7 +117,7 @@ namespace RigMonitor
         {
             this.Dispatcher.Invoke(() =>
             {
-                LoadingSpinner.Visibility = Visibility.Visible;
+                LoadingSpinnerRig0.Visibility = Visibility.Visible;
             });
         }
 
@@ -103,40 +125,40 @@ namespace RigMonitor
         {
             this.Dispatcher.Invoke(() =>
             {
-                LoadingSpinner.Visibility = Visibility.Hidden;
+                LoadingSpinnerRig0.Visibility = Visibility.Hidden;
             });
         }
-        public void Started()
+        public void StartedRig0()
         {
             this.Dispatcher.Invoke(() =>
             {
-                MonStarted.Visibility = Visibility.Visible;
-                MonStopped.Visibility = Visibility.Hidden;
+                MonStartedRig0.Visibility = Visibility.Visible;
+                MonStoppedRig0.Visibility = Visibility.Hidden;
             });
         }
 
-        public void Stopped()
+        public void StoppedRig0()
         {
             this.Dispatcher.Invoke(() =>
             {
-                MonStarted.Visibility = Visibility.Hidden;
-                MonStopped.Visibility = Visibility.Visible;
+                MonStartedRig0.Visibility = Visibility.Hidden;
+                MonStoppedRig0.Visibility = Visibility.Visible;
             });
         }
         public void SetProcesses(int count)
         {
-            this.Dispatcher.Invoke(() => { ProcessesCount.Content = count; });
+            this.Dispatcher.Invoke(() => { ProcessesCountRig0.Content = count; });
         }
 
         private void SetConsoleTextBox(string text)
         {
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 return;
             this.Dispatcher.Invoke(() => { ConsoleTextBox.Text = text; });
         }
         private void AddToConsoleNewLine(string text)
         {
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 return;
             this.Dispatcher.Invoke(() =>
             {
@@ -144,32 +166,37 @@ namespace RigMonitor
             });
         }
 
-        private void StartOnlineMonitor()
+        private void StartOnlineMonitor(int rigId)
         {
             try
             {
                 LoadingSpinnerShow();
 
-                var x = !string.IsNullOrEmpty(XPointerTextBox.Text) ? Convert.ToInt32(XPointerTextBox.Text) : 800;
-                var y = !string.IsNullOrEmpty(YPointerTextBox.Text) ? Convert.ToInt32(YPointerTextBox.Text) : 500;
-                var targetHashrate = !string.IsNullOrEmpty(TargetHashrateTextBox.Text)
-                    ? Convert.ToInt32(TargetHashrateTextBox.Text)
+                var x = !string.IsNullOrEmpty(XPointerTextBoxRig0.Text) ? Convert.ToInt32(XPointerTextBoxRig0.Text) : 800;
+                var y = !string.IsNullOrEmpty(YPointerTextBoxRig0.Text) ? Convert.ToInt32(YPointerTextBoxRig0.Text) : 500;
+                var targetHashrate = !string.IsNullOrEmpty(TargetHashrateTextBoxRig0.Text)
+                    ? Convert.ToInt32(TargetHashrateTextBoxRig0.Text)
                     : 370;
-                var rig0 = new RigMonitorService();
-                rig0.XPointer = x;
-                rig0.YPointer = y;
-                rig0.TargetHashrate = targetHashrate;
-                rig0.WorkerId = "Server";
-                rig0.ResetInterval = ResetInterval;
+                this.Rigs.Add(new RigMonitorService
+                {
+                    RigId = rigId,
+                    WorkerId = "Rig" + rigId
+                });
+                var rig = Rigs.First(r => r.RigId == rigId);
+                rig.XPointer = x;
+                rig.YPointer = y;
+                rig.TargetHashrate = targetHashrate;
+                rig.WorkerId = "Rig" + rig.RigId;
+                rig.ResetInterval = ResetInterval;
                 if (RigRestarter != null && RigRestarter.IsAlive)
                 {
                     RigRestarter.Abort();
                     ProcessCount--;
                 }
-                RigRestarter = new Thread(rig0.RestartByWatchDogIfNoReport);
+                RigRestarter = new Thread(rig.RestartByWatchDogIfNoReport);
                 RigRestarter.Start();
                 LoadingSpinnerHide();
-                Started();
+                StartedRig0();
                 ProcessCount++;
             }
             catch (Exception ex)
@@ -177,7 +204,7 @@ namespace RigMonitor
                 var text = $"{DateTime.Now.ToString("G")} : Error: {ex.Message} \r\n {ex.InnerException?.Message} \r\n";
                 LoggerService.LogError(text);
                 AddToConsoleNewLine(text);
-                Stopped();
+                StoppedRig0();
             }
             finally
             {
@@ -216,12 +243,12 @@ namespace RigMonitor
             }
         }
 
-        private void TestBtn_Click(object sender, RoutedEventArgs e)
+        private void TestBtnRig0_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var x = !string.IsNullOrEmpty(XPointerTextBox.Text) ? Convert.ToInt32(XPointerTextBox.Text) : 800;
-                var y = !string.IsNullOrEmpty(YPointerTextBox.Text) ? Convert.ToInt32(YPointerTextBox.Text) : 500;
+                var x = !string.IsNullOrEmpty(XPointerTextBoxRig0.Text) ? Convert.ToInt32(XPointerTextBoxRig0.Text) : 800;
+                var y = !string.IsNullOrEmpty(YPointerTextBoxRig0.Text) ? Convert.ToInt32(YPointerTextBoxRig0.Text) : 500;
                 var xTab = x - 50;
                 var yTab = y - 55;
                 //WinAPI.MouseMove(x, y);
@@ -255,12 +282,12 @@ namespace RigMonitor
 
         }
 
-        private void TestResetBtn_Click(object sender, RoutedEventArgs e)
+        private void TestResetBtnRig0_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var x = !string.IsNullOrEmpty(XPointerTextBox.Text) ? Convert.ToInt32(XPointerTextBox.Text) : 800;
-                var y = !string.IsNullOrEmpty(YPointerTextBox.Text) ? Convert.ToInt32(YPointerTextBox.Text) : 500;
+                var x = !string.IsNullOrEmpty(XPointerTextBoxRig0.Text) ? Convert.ToInt32(XPointerTextBoxRig0.Text) : 800;
+                var y = !string.IsNullOrEmpty(YPointerTextBoxRig0.Text) ? Convert.ToInt32(YPointerTextBoxRig0.Text) : 500;
                 var xTab = x - 50;
                 var yTab = y - 55;
                 //WinAPI.MouseMove(x, y);
@@ -290,5 +317,194 @@ namespace RigMonitor
                 AddToConsoleNewLine(text);
             }
         }
+
+        #region Rig4
+
+        /**** Rig4 Region ****/
+
+        private void StartBtnRig4_Click(object sender, RoutedEventArgs e)
+        {
+            StartOnlineMonitorRig4(4);
+        }
+
+        private void StopBtnRig4_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                StoppedRig4();
+                if (RigRestarterRig4?.IsAlive == true)
+                {
+                    RigRestarterRig4.Abort();
+                    ProcessCountRig4--;
+                }
+            }
+            catch (Exception ex)
+            {
+                var text = $"{DateTime.Now.ToString("G")} : Error: {ex.Message} \r\n {ex.InnerException?.Message} \r\n";
+                LoggerService.LogError(text);
+                AddToConsoleNewLine(text);
+            }
+            finally
+            {
+                SetProcessesRig4(ProcessCountRig4);
+            }
+        }
+
+        public void SetProcessesRig4(int count)
+        {
+            this.Dispatcher.Invoke(() => { ProcessesCountRig4.Content = count; });
+        }
+
+        public void StartedRig4()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                MonStartedRig4.Visibility = Visibility.Visible;
+                MonStoppedRig4.Visibility = Visibility.Hidden;
+            });
+        }
+
+        public void StoppedRig4()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                MonStartedRig4.Visibility = Visibility.Hidden;
+                MonStoppedRig4.Visibility = Visibility.Visible;
+            });
+        }
+
+        private void TestBtnRig4_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var x = !string.IsNullOrEmpty(XPointerTextBoxRig4.Text) ? Convert.ToInt32(XPointerTextBoxRig4.Text) : 800;
+                var y = !string.IsNullOrEmpty(YPointerTextBoxRig4.Text) ? Convert.ToInt32(YPointerTextBoxRig4.Text) : 500;
+                var xOffset = !string.IsNullOrEmpty(XPointerOffsetTbRig4.Text) ? Convert.ToInt32(XPointerOffsetTbRig4.Text) : 50;
+                var yOffset = !string.IsNullOrEmpty(YPointerOffsetTbRig4.Text) ? Convert.ToInt32(YPointerOffsetTbRig4.Text) : 50;
+                var xTab = x - xOffset;
+                var yTab = y - yOffset;
+                //WinAPI.MouseMove(x, y);
+                //WinAPI.MouseClick("left");
+                var rig = new RigMonitorService();
+                rig.XPointerRig4 = xTab;
+                rig.YPointerRig4 = yTab;
+                var rigRestarter = new Thread(rig.MouseMoveTestRig4);
+                rigRestarter.Start();
+                Thread.Sleep(200);
+                if (rigRestarter.IsAlive)
+                    rigRestarter.Abort();
+                rig.XPointerRig4 = x;
+                rig.YPointerRig4 = y;
+                rig.XPointerOffsetRig4 = xOffset;
+                rig.YPointerOffsetRig4 = yOffset;
+                rigRestarter = new Thread(rig.MouseMoveTestRig4);
+                rigRestarter.Start();
+                Thread.Sleep(1000);
+                if (rigRestarter.IsAlive)
+                    rigRestarter.Abort();
+            }
+            catch (Exception ex)
+            {
+                var text = $"{DateTime.Now.ToString("G")} : Error: {ex.Message} \r\n {ex.InnerException?.Message} \r\n";
+                LoggerService.LogError(text);
+                AddToConsoleNewLine(text);
+            }
+        }
+
+
+        private void TestResetBtnRig4_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var x = !string.IsNullOrEmpty(XPointerTextBoxRig4.Text) ? Convert.ToInt32(XPointerTextBoxRig4.Text) : 800;
+                var y = !string.IsNullOrEmpty(YPointerTextBoxRig4.Text) ? Convert.ToInt32(YPointerTextBoxRig4.Text) : 500;
+                var xOffset = !string.IsNullOrEmpty(XPointerOffsetTbRig4.Text) ? Convert.ToInt32(XPointerOffsetTbRig4.Text) : 50;
+                var yOffset = !string.IsNullOrEmpty(YPointerOffsetTbRig4.Text) ? Convert.ToInt32(YPointerOffsetTbRig4.Text) : 50;
+                var xTab = x - xOffset;
+                var yTab = y - yOffset;
+                //WinAPI.MouseMove(x, y);
+                //WinAPI.MouseClick("left");
+                //WinAPI.MouseClick("left");
+                //WinAPI.MouseClick("left");
+                var rig = new RigMonitorService();
+                rig.XPointerRig4 = xTab;
+                rig.YPointerRig4 = yTab;
+                rig.XPointerOffsetRig4 = xOffset;
+                rig.YPointerOffsetRig4 = yOffset;
+                var rigRestarter = new Thread(rig.RestartRig4);
+                rigRestarter.Start();
+                Thread.Sleep(1000);
+                if (rigRestarter.IsAlive)
+                    rigRestarter.Abort();
+                rig.XPointerRig4 = x;
+                rig.YPointerRig4 = y;
+                rig.XPointerOffsetRig4 = xOffset;
+                rig.YPointerOffsetRig4 = yOffset;
+                rigRestarter = new Thread(rig.RestartRig4);
+                rigRestarter.Start();
+                Thread.Sleep(1000);
+                if (rigRestarter.IsAlive)
+                    rigRestarter.Abort();
+            }
+            catch (Exception ex)
+            {
+                var text = $"{DateTime.Now.ToString("G")} : Error: {ex.Message} \r\n {ex.InnerException?.Message} \r\n";
+                LoggerService.LogError(text);
+                AddToConsoleNewLine(text);
+            }
+        }
+
+        private void StartOnlineMonitorRig4(int rigId)
+        {
+            try
+            {
+                LoadingSpinnerShow();
+
+                var x = !string.IsNullOrEmpty(XPointerTextBoxRig4.Text) ? Convert.ToInt32(XPointerTextBoxRig4.Text) : 800;
+                var y = !string.IsNullOrEmpty(YPointerTextBoxRig4.Text) ? Convert.ToInt32(YPointerTextBoxRig4.Text) : 500;
+                var xOffset = !string.IsNullOrEmpty(XPointerOffsetTbRig4.Text) ? Convert.ToInt32(XPointerOffsetTbRig4.Text) : 50;
+                var yOffset = !string.IsNullOrEmpty(YPointerOffsetTbRig4.Text) ? Convert.ToInt32(YPointerOffsetTbRig4.Text) : 50;
+
+                var targetHashrate = !string.IsNullOrEmpty(TargetHashrateTextBoxRig4.Text)
+                    ? Convert.ToInt32(TargetHashrateTextBoxRig4.Text)
+                    : 309;
+                Rigs.Add(new RigMonitorService
+                {
+                    RigId = rigId,
+                    WorkerId = "Rig" + rigId
+                });
+                var rig = Rigs.First(r => r.RigId == rigId);
+                rig.XPointerRig4 = x;
+                rig.YPointerRig4 = y;
+                rig.XPointerOffsetRig4 = xOffset;
+                rig.YPointerOffsetRig4 = yOffset;
+                rig.TargetHashrate = targetHashrate;
+                rig.WorkerId = "Rig" + rig.RigId;
+                rig.ResetInterval = ResetInterval;
+                if (RigRestarterRig4 != null && RigRestarterRig4.IsAlive)
+                {
+                    RigRestarterRig4.Abort();
+                    ProcessCountRig4--;
+                }
+                RigRestarterRig4 = new Thread(rig.RestartByWatchDogIfNoReportRig4);
+                RigRestarterRig4.Start();
+                LoadingSpinnerHide();
+                StartedRig4();
+                ProcessCountRig4++;
+            }
+            catch (Exception ex)
+            {
+                var text = $"{DateTime.Now.ToString("G")} : Error: {ex.Message} \r\n {ex.InnerException?.Message} \r\n";
+                LoggerService.LogError(text);
+                AddToConsoleNewLine(text);
+                StoppedRig4();
+            }
+            finally
+            {
+                SetProcessesRig4(ProcessCountRig4);
+            }
+        }
+
+        #endregion
     }
 }

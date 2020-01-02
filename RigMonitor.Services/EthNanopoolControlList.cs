@@ -16,9 +16,29 @@ namespace RigMonitor.Services
             return head;
         }
 
+        public EthNanopoolControl GetHead(string workerId)
+        {
+            var _head = head;
+            while (!_head.Worker.Id.ToLower().Equals(workerId.ToLower()))
+            {
+                _head = _head.Next;
+            }
+            return head;
+        }
+
         public EthNanopoolControl GetTail()
         {
             return tail;
+        }
+
+        public EthNanopoolControl GetTail(string workerId)
+        {
+            var _tail = tail;
+            while (!_tail.Worker.Id.ToLower().Equals(workerId.ToLower()))
+            {
+                _tail = _tail.Prev;
+            }
+            return _tail;
         }
 
         public int Length()
@@ -135,6 +155,18 @@ namespace RigMonitor.Services
             while (current != null)
             {
                 if (current.TimeMoment > data)
+                    return current;
+                current = current.Next;
+            }
+            return tail;
+        }
+
+        public EthNanopoolControl SearchEarliest(string workerId, DateTime data)
+        {
+            var current = head;
+            while (current != null)
+            {
+                if (current.Worker.Id.ToLower() == workerId.ToLower() && current.TimeMoment > data)
                     return current;
                 current = current.Next;
             }
